@@ -32,6 +32,16 @@ namespace ManagedDirectX
         private Camera camera = null;
 
         /// <summary>
+        /// 照明
+        /// </summary>
+        private Lighting lighting = null;
+
+        /// <summary>
+        /// XYZ軸
+        /// </summary>
+        private XYZAxis xyzAxis = null;
+
+        /// <summary>
         /// 描画アイテム工場
         /// </summary>
         private DrawingFactory factory = null;
@@ -104,7 +114,11 @@ namespace ManagedDirectX
             }
 
             this.camera = new Camera(device, 20.0f, 300.0f, 30.0f);
+            this.lighting = new Lighting(device);
+            this.xyzAxis = new XYZAxis(device, 20.0f);
             this.factory = new DrawingFactory(device);
+
+            this.device.RenderState.CullMode = Cull.None;
 
             return true;
         }
@@ -129,8 +143,10 @@ namespace ManagedDirectX
             if (this.device == null) return;
 
             this.camera.Update(this.device);
-            this.device.Clear(ClearFlags.Target, Color.LightSteelBlue, 1.0f, unchecked((int)0xFFFFFFFF));
+            this.device.Clear(ClearFlags.Target | ClearFlags.ZBuffer | ClearFlags.Stencil, Color.LightSteelBlue, 1.0f, unchecked((int)0xFFFFFFFF));
             this.device.BeginScene();
+
+            this.xyzAxis.Draw(this.device);
         }
 
         /// <summary>

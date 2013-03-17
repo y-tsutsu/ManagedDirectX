@@ -28,7 +28,15 @@ namespace ManagedDirectX
         public MainForm()
         {
             InitializeComponent();
+        }
 
+        /// <summary>
+        /// ロードイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_Load(object sender, EventArgs e)
+        {
             this.drawingWord = new DrawingWorld(this.panelCanvas);
             if (!this.drawingWord.Initialize())
             {
@@ -36,7 +44,7 @@ namespace ManagedDirectX
             }
 
             this.spheres = new List<DrawingSphere>();
-            spheres.Add(this.drawingWord.Factory.CreateSphere(1.0f, 32, 32));
+            spheres.Add(this.drawingWord.Factory.CreateSphere(1.0f, 32, 32, Color.Crimson));
 
             this.backgroundWorker.RunWorkerAsync();
         }
@@ -76,7 +84,6 @@ namespace ManagedDirectX
 
                 foreach (var item in this.spheres)
                 {
-                    item.Color = Color.Red;
                     this.drawingWord.Draw(item);
                 }
 

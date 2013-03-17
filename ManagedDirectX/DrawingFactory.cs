@@ -34,10 +34,11 @@ namespace ManagedDirectX
         /// <param name="radius">球の半径</param>
         /// <param name="slices">主軸を回転軸としたスライスの数</param>
         /// <param name="stacks">主軸に沿ったスタックの数</param>
-        /// <returns></returns>
-        public DrawingSphere CreateSphere(float radius, int slices, int stacks)
+        /// <param name="color">球の色</param>
+        /// <returns>生成した球</returns>
+        public DrawingSphere CreateSphere(float radius, int slices, int stacks, Color color)
         {
-            return new DrawingSphere(this.device, radius, slices, stacks);
+            return new DrawingSphere(this.device, radius, slices, stacks, color);
         }
     }
 }

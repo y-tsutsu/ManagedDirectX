@@ -52,9 +52,11 @@ namespace ManagedDirectX
         /// <param name="radius">球の半径</param>
         /// <param name="slices">主軸を回転軸としたスライスの数</param>
         /// <param name="stacks">主軸に沿ったスタックの数</param>
-        public DrawingSphere(Device device, float radius, int slices, int stacks)
+        /// <param name="color">球の色</param>
+        public DrawingSphere(Device device, float radius, int slices, int stacks, Color color)
         {
             this.mesh = Mesh.Sphere(device, radius, slices, stacks);
+            this.Color = color;
         }
 
         /// <summary>

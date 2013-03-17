@@ -34,10 +34,11 @@
             // 
             // panelCanvas
             // 
+            this.panelCanvas.BackColor = System.Drawing.Color.GhostWhite;
             this.panelCanvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCanvas.Location = new System.Drawing.Point(0, 0);
             this.panelCanvas.Name = "panelCanvas";
-            this.panelCanvas.Size = new System.Drawing.Size(284, 262);
+            this.panelCanvas.Size = new System.Drawing.Size(584, 562);
             this.panelCanvas.TabIndex = 0;
             // 
             // backgroundWorker
@@ -49,11 +50,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.BackColor = System.Drawing.Color.GhostWhite;
+            this.ClientSize = new System.Drawing.Size(584, 562);
             this.Controls.Add(this.panelCanvas);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
         }
