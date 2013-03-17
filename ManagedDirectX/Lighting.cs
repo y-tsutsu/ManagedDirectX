@@ -20,6 +20,8 @@ namespace ManagedDirectX
         /// <param name="device">デバイス</param>
         public Lighting(Device device)
         {
+            device.RenderState.Lighting = true;
+
             device.Lights[0].Type = LightType.Directional;
             device.Lights[0].Diffuse = Color.White;
             device.Lights[0].Ambient = Color.FromArgb(255, 128, 128, 128);

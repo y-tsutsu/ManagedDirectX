@@ -13,7 +13,7 @@ namespace ManagedDirectX
     /// <summary>
     /// カメラ
     /// </summary>
-    class Camera
+    public class Camera
     {
         /// <summary>
         /// 前回のマウスのカーソル位置
@@ -42,7 +42,7 @@ namespace ManagedDirectX
         /// <param name="radius">半径</param>
         /// <param name="theta">θ</param>
         /// <param name="phi">φ</param>
-        public Camera(Device device, float radius, float theta, float phi)
+        internal Camera(Device device, float radius, float theta, float phi)
         {
             this.Radius = radius;
             this.Theta = theta;
@@ -56,7 +56,7 @@ namespace ManagedDirectX
         /// </summary>
         /// <param name="mouseLocation">マウスポイント</param>
         /// <param name="button">マウスボタン</param>
-        public void InputMouseMove(Point mouseLocation, MouseButtons button)
+        internal void InputMouseMove(Point mouseLocation, MouseButtons button)
         {
             if (button == MouseButtons.Left)
             {
@@ -79,7 +79,7 @@ namespace ManagedDirectX
         /// マウスホイール入力
         /// </summary>
         /// <param name="delta">Δ</param>
-        public void InputMouseWheel(int delta)
+        internal void InputMouseWheel(int delta)
         {
             this.Radius -= delta / 480.0f;
             if (this.Radius < 4.0f)
@@ -92,7 +92,7 @@ namespace ManagedDirectX
         /// カメラ設定を更新
         /// </summary>
         /// <param name="device">デバイス</param>
-        public void Update(Device device)
+        internal void Update(Device device)
         {
             // レンズの位置を三次元極座標で変換
             float theta = Geometry.DegreeToRadian(this.Theta);

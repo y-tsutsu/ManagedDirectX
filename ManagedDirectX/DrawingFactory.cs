@@ -40,5 +40,41 @@ namespace ManagedDirectX
         {
             return new DrawingSphere(this.device, radius, slices, stacks, color);
         }
+
+        /// <summary>
+        /// 枠の生成
+        /// </summary>
+        /// <param name="device">デバイス</param>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        /// <param name="depth">奥行き</param>
+        /// <param name="color">色</param>
+        /// <returns>生成した枠</returns>
+        public DrawingFrame CreateFrame(float width, float height, float depth, Color color)
+        {
+            return new DrawingFrame(this.device, width, height, depth, color);
+        }
+
+        /// <summary>
+        /// XYZ軸の生成
+        /// </summary>
+        /// <param name="length">長さ</param>
+        /// <returns>生成したXYZ軸</returns>
+        public DrawingXYZAxis CreateXYZAxis(float length)
+        {
+            return new DrawingXYZAxis(this.device, length);
+        }
+
+        /// <summary>
+        /// テキストの生成
+        /// </summary>
+        /// <param name="height">文字の高さ</param>
+        /// <param name="fontName">フォント名</param>
+        /// <param name="color">色</param>
+        /// <returns>生成したテキスト</returns>
+        public DrawingText CreateText(int height, string fontName, Color color)
+        {
+            return new DrawingText(this.device, height, fontName, color);
+        }
     }
 }

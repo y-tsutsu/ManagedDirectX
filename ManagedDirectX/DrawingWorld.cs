@@ -32,14 +32,14 @@ namespace ManagedDirectX
         private Camera camera = null;
 
         /// <summary>
+        /// カメラアクセサ
+        /// </summary>
+        public Camera Camera { get { return this.camera; } }
+
+        /// <summary>
         /// 照明
         /// </summary>
         private Lighting lighting = null;
-
-        /// <summary>
-        /// XYZ軸
-        /// </summary>
-        private XYZAxis xyzAxis = null;
 
         /// <summary>
         /// 描画アイテム工場
@@ -55,12 +55,18 @@ namespace ManagedDirectX
         }
 
         /// <summary>
+        /// 背景色
+        /// </summary>
+        public Color BackColor { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="canvas">描画対象物</param>
         public DrawingWorld(Control canvas)
         {
             this.canvas = canvas;
+            this.BackColor = Color.LightSteelBlue;
 
             this.canvas.MouseMove += (object sender, MouseEventArgs e) =>
                 {
@@ -115,7 +121,6 @@ namespace ManagedDirectX
 
             this.camera = new Camera(device, 20.0f, 300.0f, 30.0f);
             this.lighting = new Lighting(device);
-            this.xyzAxis = new XYZAxis(device, 20.0f);
             this.factory = new DrawingFactory(device);
 
             this.device.RenderState.CullMode = Cull.None;
@@ -143,10 +148,9 @@ namespace ManagedDirectX
             if (this.device == null) return;
 
             this.camera.Update(this.device);
-            this.device.Clear(ClearFlags.Target | ClearFlags.ZBuffer | ClearFlags.Stencil, Color.LightSteelBlue, 1.0f, unchecked((int)0xFFFFFFFF));
-            this.device.BeginScene();
 
-            this.xyzAxis.Draw(this.device);
+            this.device.Clear(ClearFlags.Target | ClearFlags.ZBuffer | ClearFlags.Stencil, this.BackColor, 1.0f, unchecked((int)0xFFFFFFFF));
+            this.device.BeginScene();
         }
 
         /// <summary>

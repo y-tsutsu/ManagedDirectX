@@ -27,11 +27,7 @@ namespace ManagedDirectX
         /// <summary>
         /// 球の座標
         /// </summary>
-        public Vector3 Location
-        {
-            set;
-            private get;
-        }
+        public Point3D Location { get; set; }
 
         /// <summary>
         /// 球の色
@@ -57,6 +53,7 @@ namespace ManagedDirectX
         {
             this.mesh = Mesh.Sphere(device, radius, slices, stacks);
             this.Color = color;
+            this.Location = new Point3D();
         }
 
         /// <summary>
@@ -66,7 +63,7 @@ namespace ManagedDirectX
         public void Draw(Device device)
         {
             device.Material = this.material;
-            device.SetTransform(TransformType.World, Matrix.Translation(new Vector3(0.0f, 0.0f, 0.0f)));
+            device.SetTransform(TransformType.World, Matrix.Translation(this.Location.ToVector3()));
             this.mesh.DrawSubset(0);
         }
     }

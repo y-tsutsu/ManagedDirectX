@@ -10,9 +10,9 @@ using Microsoft.DirectX.Direct3D;
 namespace ManagedDirectX
 {
     /// <summary>
-    /// XYZ軸
+    /// XYZ軸の描画アイテム
     /// </summary>
-    public class XYZAxis : IDrawable
+    public class DrawingXYZAxis : IDrawable
     {
         /// <summary>
         /// 頂点バッファ
@@ -24,7 +24,7 @@ namespace ManagedDirectX
         /// </summary>
         /// <param name="device">デバイス</param>
         /// <param name="length">長さ</param>
-        public XYZAxis(Device device, float length)
+        public DrawingXYZAxis(Device device, float length)
         {
             this.vertex = new VertexBuffer(
                 typeof(CustomVertex.PositionColored), 6, device, Usage.None, CustomVertex.PositionColored.Format, Pool.Managed);
