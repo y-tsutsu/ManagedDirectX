@@ -21,6 +21,11 @@ namespace ManagedDirectX
         private Point oldMouseLocation;
 
         /// <summary>
+        /// 水平移動のオフセット
+        /// </summary>
+        public PointF offset;
+
+        /// <summary>
         /// 半径
         /// </summary>
         public float Radius { get; private set; }
@@ -99,9 +104,47 @@ namespace ManagedDirectX
             float phi = Geometry.DegreeToRadian(this.Phi);
             var lensLocation = new Vector3((float)(this.Radius * Math.Cos(theta) * Math.Cos(phi)),
                 (float)(this.Radius * Math.Sin(phi)), (float)(this.Radius * Math.Sin(theta) * Math.Cos(phi)));
+            var target = new Vector3(0.0f, 0.0f, 0.0f);
+
+            // 平行移動変換
+            var trans = Matrix.Translation(new Vector3(this.offset.X, this.offset.Y, 0.0f));
+            lensLocation = Vector3.TransformCoordinate(lensLocation, trans);
+            target = Vector3.TransformCoordinate(target, trans);
 
             // ビュー変換行列を左手座標系ビュー行列で設定する
-            device.Transform.View = Matrix.LookAtLH(lensLocation, new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f));
+            device.Transform.View = Matrix.LookAtLH(lensLocation, target, new Vector3(0.0f, 1.0f, 0.0f));
+        }
+
+        /// <summary>
+        /// X方向（プラス）移動
+        /// </summary>
+        public void MoveXPlus()
+        {
+            this.offset.X += 0.5f;
+        }
+
+        /// <summary>
+        /// X方向（マイナス）移動
+        /// </summary>
+        public void MoveXMinus()
+        {
+            this.offset.X -= 0.5f;
+        }
+
+        /// <summary>
+        /// Y方向（プラス）移動
+        /// </summary>
+        public void MoveYPlus()
+        {
+            this.offset.Y += 0.5f;
+        }
+
+        /// <summary>
+        /// Y方向（マイナス）移動
+        /// </summary>
+        public void MoveYMinus()
+        {
+            this.offset.Y -= 0.5f;
         }
     }
 }

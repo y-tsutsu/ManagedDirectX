@@ -154,5 +154,45 @@ namespace ManagedDirectX
                 System.Threading.Thread.Sleep(1);
             }
         }
+
+        /// <summary>
+        /// カメラのX方向（プラス）移動
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonXPlus_Click(object sender, EventArgs e)
+        {
+            this.drawingWord.Camera.MoveXPlus();
+        }
+
+        /// <summary>
+        /// カメラのX方向（マイナス）移動
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonXMinus_Click(object sender, EventArgs e)
+        {
+            this.drawingWord.Camera.MoveXMinus();
+        }
+
+        /// <summary>
+        /// カメラのY方向（プラス）移動
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonYPlux_Click(object sender, EventArgs e)
+        {
+            this.drawingWord.Camera.MoveYPlus();
+        }
+
+        /// <summary>
+        /// カメラのY方向（マイナス）移動
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonYMinus_Click(object sender, EventArgs e)
+        {
+            this.drawingWord.Camera.MoveYMinus();
+        }
     }
 }
