@@ -9,6 +9,9 @@ using Microsoft.DirectX.Direct3D;
 
 namespace ManagedDirectX
 {
+    /// <summary>
+    /// Vector3の代替クラス
+    /// </summary>
     public class Point3D
     {
         /// <summary>
@@ -45,6 +48,15 @@ namespace ManagedDirectX
             this.X = x;
             this.Y = y;
             this.Z = z;
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vector">Vector3</param>
+        public Point3D(Vector3 vector)
+            : this(vector.X, vector.Y, vector.Z)
+        {
         }
 
         /// <summary>

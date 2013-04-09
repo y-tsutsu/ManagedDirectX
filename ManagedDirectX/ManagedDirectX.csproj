@@ -65,9 +65,11 @@
     <Compile Include="IDrawable.cs" />
     <Compile Include="DrawingWorld.cs" />
     <Compile Include="Lighting.cs" />
+    <Compile Include="MovingSphere.cs" />
     <Compile Include="Point3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DrawingXYZAxis.cs" />
+    <Compile Include="ReflectingFrame.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
