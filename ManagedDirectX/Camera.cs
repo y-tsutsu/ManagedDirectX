@@ -23,7 +23,7 @@ namespace ManagedDirectX
         /// <summary>
         /// 水平移動のオフセット
         /// </summary>
-        public PointF offset;
+        public Vector3 offset;
 
         /// <summary>
         /// 半径
@@ -107,7 +107,7 @@ namespace ManagedDirectX
             var target = new Vector3(0.0f, 0.0f, 0.0f);
 
             // 平行移動変換
-            var trans = Matrix.Translation(new Vector3(this.offset.X, this.offset.Y, 0.0f));
+            var trans = Matrix.Translation(new Vector3(this.offset.X, this.offset.Y, this.offset.Z));
             lensLocation = Vector3.TransformCoordinate(lensLocation, trans);
             target = Vector3.TransformCoordinate(target, trans);
 
@@ -145,6 +145,22 @@ namespace ManagedDirectX
         public void MoveYMinus()
         {
             this.offset.Y -= 0.5f;
+        }
+
+        /// <summary>
+        /// Z方向（プラス）移動
+        /// </summary>
+        public void MoveZPlus()
+        {
+            this.offset.Z += 0.5f;
+        }
+
+        /// <summary>
+        /// Z方向（マイナス）移動
+        /// </summary>
+        public void MoveZMinus()
+        {
+            this.offset.Z -= 0.5f;
         }
     }
 }
