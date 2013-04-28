@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.ComponentModel;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 
@@ -60,11 +61,49 @@ namespace ManagedDirectX
         public Color BackColor { get; set; }
 
         /// <summary>
+        /// 描画スレッド
+        /// </summary>
+        private BackgroundWorker backgroundWorker;
+
+        /// <summary>
+        /// 描画中かどうか？
+        /// </summary>
+        public bool IsBusy { get { return this.backgroundWorker.IsBusy; } }
+
+        /// <summary>
+        /// 描画時イベント
+        /// </summary>
+        public event EventHandler Drawing;
+
+        /// <summary>
+        /// 描画時イベント発行
+        /// </summary>
+        /// <param name="e"></param>
+        private void OnDrawing(EventArgs e)
+        {
+            if (this.Drawing != null)
+            {
+                this.Drawing(this, e);
+            }
+        }
+
+        /// <summary>
+        /// フレームレート（fps）
+        /// </summary>
+        public int FrameRate { private get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="canvas">描画対象物</param>
         public DrawingWorld(Control canvas)
         {
+            this.backgroundWorker = new BackgroundWorker();
+            this.backgroundWorker.WorkerSupportsCancellation = true;
+            this.backgroundWorker.DoWork += this.BackgroundWorkerDoWork;
+
+            this.FrameRate = 1;
+
             this.canvas = canvas;
             this.BackColor = Color.LightSteelBlue;
 
@@ -141,9 +180,62 @@ namespace ManagedDirectX
         }
 
         /// <summary>
+        /// 描画スタート
+        /// </summary>
+        public void Start()
+        {
+            if (!this.backgroundWorker.IsBusy)
+            {
+                this.backgroundWorker.RunWorkerAsync();
+            }
+        }
+
+        /// <summary>
+        /// 一時停止
+        /// </summary>
+        public void Pause()
+        {
+            if (this.backgroundWorker.IsBusy)
+            {
+                this.backgroundWorker.CancelAsync();
+            }
+        }
+
+        /// <summary>
+        /// 描画スレッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BackgroundWorkerDoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                var start = DateTime.Now;
+
+                if (this.backgroundWorker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                this.BeginScene();
+                this.OnDrawing(new EventArgs());
+                this.EndScene();
+
+                var msT = 1000.0 / this.FrameRate;
+                while (true)
+                {
+                    var span = DateTime.Now - start;
+                    if (msT < span.TotalMilliseconds) break;
+                    System.Threading.Thread.Sleep(1);
+                }
+            }
+        }
+
+        /// <summary>
         /// 描画前処理
         /// </summary>
-        public void BeginScene()
+        private void BeginScene()
         {
             if (this.device == null) return;
 
@@ -156,7 +248,7 @@ namespace ManagedDirectX
         /// <summary>
         /// 描画後処理
         /// </summary>
-        public void EndScene()
+        private void EndScene()
         {
             if (this.device == null) return;
 

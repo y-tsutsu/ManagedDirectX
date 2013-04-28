@@ -73,6 +73,8 @@ namespace ManagedDirectX
                 MessageBox.Show("そんなバカな！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             this.drawingWord.BackColor = Color.FromArgb(255, 30, 30, 30);
+            this.drawingWord.FrameRate = 30;
+            this.drawingWord.Drawing += this.DrawingWordDrawing;
 
             this.xyzAxis = this.drawingWord.Factory.CreateXYZAxis(20.0f);
             this.text = this.drawingWord.Factory.CreateText(12, "ＭＳ ゴシック", Color.Crimson);
@@ -93,7 +95,7 @@ namespace ManagedDirectX
             this.frame = this.drawingWord.Factory.CreateFrame(20.0f, 15.0f, 12.0f, Color.Silver);
             this.reflectingFrame = new ReflectingFrame(20.0f, 15.0f, 12.0f);
 
-            this.backgroundWorker.RunWorkerAsync();
+            this.drawingWord.Start();
         }
 
         /// <summary>
@@ -103,9 +105,9 @@ namespace ManagedDirectX
         /// <param name="e"></param>
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (this.backgroundWorker.IsBusy)
+            if (this.drawingWord.IsBusy)
             {
-                this.backgroundWorker.CancelAsync();
+                this.drawingWord.Pause();
             }
 
             this.drawingWord.Dispose();
@@ -113,46 +115,30 @@ namespace ManagedDirectX
         }
 
         /// <summary>
-        /// 描画スレッド
+        /// 描画世界の描画イベント
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void DrawingWordDrawing(object sender, EventArgs e)
         {
-            while (true)
+            this.drawingWord.Draw(this.xyzAxis);
+
+            for (int i = 0; i < this.sphere.Length; i++)
             {
-                if (this.backgroundWorker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    return;
-                }
-
-                this.drawingWord.BeginScene();
-                {
-                    // 描画処理はここで！
-                    this.drawingWord.Draw(this.xyzAxis);
-
-                    for (int i = 0; i < this.sphere.Length; i++)
-                    {
-                        this.movingSphere[i].Move();
-                        this.reflectingFrame.ReflectBy(this.movingSphere[i]);
-                        this.sphere[i].Location = this.movingSphere[i].Location;
-                        this.drawingWord.Draw(this.sphere[i]);
-                    }
-
-                    this.drawingWord.Draw(this.frame);
-
-                    this.text.Strings.Clear();
-                    this.text.Strings.Add("Camera setting");
-                    this.text.Strings.Add("θ：" + this.drawingWord.Camera.Theta + "°");
-                    this.text.Strings.Add("φ：" + this.drawingWord.Camera.Phi + "°");
-                    this.text.Strings.Add("Ｒ：" + string.Format("{0:F2}", this.drawingWord.Camera.Radius) + "°");
-                    this.drawingWord.Draw(this.text);
-                }
-                this.drawingWord.EndScene();
-
-                System.Threading.Thread.Sleep(1);
+                this.movingSphere[i].Move();
+                this.reflectingFrame.ReflectBy(this.movingSphere[i]);
+                this.sphere[i].Location = this.movingSphere[i].Location;
+                this.drawingWord.Draw(this.sphere[i]);
             }
+
+            this.drawingWord.Draw(this.frame);
+
+            this.text.Strings.Clear();
+            this.text.Strings.Add("Camera setting");
+            this.text.Strings.Add("θ：" + this.drawingWord.Camera.Theta + "°");
+            this.text.Strings.Add("φ：" + this.drawingWord.Camera.Phi + "°");
+            this.text.Strings.Add("Ｒ：" + string.Format("{0:F2}", this.drawingWord.Camera.Radius) + "°");
+            this.drawingWord.Draw(this.text);
         }
 
         /// <summary>

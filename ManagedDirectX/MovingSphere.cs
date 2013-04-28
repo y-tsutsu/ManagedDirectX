@@ -53,7 +53,7 @@ namespace ManagedDirectX.MovingModel
             this.location = location.ToVector3();
             this.Radius = radius;
             this.direction = new Vector3((float)MovingSphere.random.NextDouble(), (float)MovingSphere.random.NextDouble(), (float)MovingSphere.random.NextDouble());
-            this.speed = MovingSphere.random.Next(10, 30) / 50.0f;
+            this.speed = MovingSphere.random.Next(30, 50) / 50.0f;
         }
 
         /// <summary>

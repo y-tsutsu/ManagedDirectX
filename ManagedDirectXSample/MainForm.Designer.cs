@@ -34,7 +34,6 @@
             this.buttonYMinus = new System.Windows.Forms.Button();
             this.buttonXMinus = new System.Windows.Forms.Button();
             this.buttonXPlus = new System.Windows.Forms.Button();
-            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.panelCanvas.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,11 +90,6 @@
             this.buttonXPlus.UseVisualStyleBackColor = true;
             this.buttonXPlus.Click += new System.EventHandler(this.buttonXPlus_Click);
             // 
-            // backgroundWorker
-            // 
-            this.backgroundWorker.WorkerSupportsCancellation = true;
-            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -116,7 +110,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panelCanvas;
-        private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Button buttonYPlux;
         private System.Windows.Forms.Button buttonYMinus;
         private System.Windows.Forms.Button buttonXMinus;
